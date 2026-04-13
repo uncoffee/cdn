@@ -1,17 +1,18 @@
 import socket
 
-def udp_client():
+def tcp_client():
     host = '127.0.0.1'
     port = 12345
     img = "12345"
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    message = "Hello, UDP Server!"
-    client_socket.sendto(img.encode('utf-8'), (host, port))
+    message = "Hello, tcp Server!"
+    client_socket.connect((host, port))
+    client_socket.send(img.encode('utf-8'))
 
-    data, _ = client_socket.recvfrom(1024)
-    print(f"サーバーからの応答: {data.decode('utf-8')}")
+    request = client_socket.recv(1024).decode('utf-8')
+    print(f"サーバーからの応答: {request}")
     client_socket.close()
 
 if __name__ == "__main__":
-    udp_client()
+    tcp_client()
